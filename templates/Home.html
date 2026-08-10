@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Churn Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='Home.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>Churn Prediction</h1>
+    </header>
+
+    <nav id="navbar">
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('model_page') }}">Model</a></li>
+        </ul>
+    </nav>
+        
+    <main>
+        <h1>Welcome to the churn prediction</h1>
+
+        <h2>What is Customer Churn?</h2>
+
+        <p>
+            Customer churn means that a customer stops using a product or
+            service, for example by cancelling their phone contract or
+            subscription.
+        </p>
+
+        <p>
+            For companies, losing customers can mean losing future revenue.
+            Churn prediction can help identify customers who are more likely
+            to leave so that the company can take action before they churn.
+        </p>
+
+
+        <h2>What does this project do?</h2>
+
+        <p>
+            This project uses Machine Learning to predict whether a customer
+            is likely to churn.
+        </p>
+
+        <p>
+            The model looks at different information about a customer,
+            including their contract, services, payment method, monthly
+            charges and how long they have been a customer.
+        </p>
+
+
+
+        <h2>Why is Churn Prediction useful?</h2>
+
+        <ul>
+            <li>Reduce customer loss</li>
+            <li>Improve customer satisfaction</li>
+            <li>Increase revenue</li>
+            <li>Make better business decisions</li>
+        </ul>
+
+
+        <h2>Try the Model</h2>
+
+        <p>
+            Enter a customer's information and let the trained Machine Learning
+            model predict whether the customer is likely to churn.
+        </p>
+
+        <a id="button" href="{{ url_for('model_page') }}">
+            <button>Start</button>
+        </a>
+    </main>
+
+</body>
+</html>

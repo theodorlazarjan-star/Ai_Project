@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Churn Prediction Model</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='Model.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <h1>Churn Prediction</h1>
+    </header>
+
+    <nav id="navbar">
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('model_page') }}">Model</a></li>
+        </ul>
+    </nav>
+
+    <main>
+
+        <h1>Customer Churn Prediction</h1>
+
+        <p>
+            Enter the customer's information below to predict whether
+            the customer is likely to churn.
+        </p>
+
+        <h2>Customer Information</h2>
+
+        <form action="/predict" method="POST">
+
+            <label for="tenure">Tenure (months):</label>
+            <input type="number" id="tenure" name="tenure"
+                min="0" max="100" required>
+            <br><br>
+
+            <label for="multiplelines">Multiple Lines:</label>
+            <select id="multiplelines" name="multiplelines" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="No phone service">No phone service</option>
+            </select>
+            <br><br>
+
+            <label for="internet">Internet Service:</label>
+            <select id="internet" name="internet" required>
+                <option value="DSL">DSL</option>
+                <option value="Fiber optic">Fiber optic</option>
+                <option value="No">No internet service</option>
+            </select>
+            <br><br>
+
+            <label for="security">Online Security:</label>
+            <select id="security" name="security" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="No internet service">No internet service</option>
+            </select>
+            <br><br>
+
+            <label for="backup">Online Backup:</label>
+            <select id="backup" name="backup" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="No internet service">No internet service</option>
+            </select>
+            <br><br>
+
+            <label for="tech">Tech Support:</label>
+            <select id="tech" name="tech" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="No internet service">No internet service</option>
+            </select>
+            <br><br>
+
+            <label for="paperless">Paperless Billing:</label>
+            <select id="paperless" name="paperless" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+            <br><br>
+
+            <label for="contract">Contract:</label>
+            <select id="contract" name="contract" required>
+                <option value="Month-to-month">Month-to-month</option>
+                <option value="One year">One year</option>
+                <option value="Two year">Two year</option>
+            </select>
+            <br><br>
+
+            <label for="payment">Payment Method:</label>
+            <select id="payment" name="payment" required>
+                <option value="Bank transfer (automatic)">
+                    Bank transfer (automatic)
+                </option>
+                <option value="Credit card (automatic)">
+                    Credit card (automatic)
+                </option>
+                <option value="Electronic check">
+                    Electronic check
+                </option>
+                <option value="Mailed check">
+                    Mailed check
+                </option>
+            </select>
+            <br><br>
+
+            <label for="monthly">Monthly Charges:</label>
+            <input type="number" id="monthly" name="monthly"
+                min="0" step="0.01" required>
+            <br><br>
+
+            <input type="submit" value="Predict Churn">
+            <input type="reset" value="Reset">
+
+        </form>
+
+
+        <h2>Prediction</h2>
+
+        {% if prediction %}
+
+            <div id="prediction">
+
+                <h3>Prediction: {{ prediction }}</h3>
+
+                <p>
+                    <strong>Churn Probability:</strong>
+                    {{ "%.2f"|format(probability * 100) }}%
+                </p>
+
+                <p>
+                    <strong>Threshold:</strong>
+                    {{ threshold }}
+                </p>
+
+            </div>
+
+        {% else %}
+
+            <div id="prediction">
+                <strong>Prediction: --</strong>
+            </div>
+
+        {% endif %}
+
+    </main>
+
+</body>
+
+</html>

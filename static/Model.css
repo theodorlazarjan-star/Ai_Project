@@ -1,0 +1,102 @@
+body {
+    margin: 0px;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: rgb(189, 178, 178);
+    margin-top: 0px;
+    text-align: center;
+    padding: 15px;
+}
+
+header h1 {
+    margin: 0px;
+    font-style: italic;
+}
+
+#navbar ul {
+    list-style-type: none;
+    background-color: antiquewhite;
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+}
+
+#navbar a {
+    text-decoration: none;
+    color: grey;
+    text-align: center;
+    display: block;
+    padding: 15px;
+}
+
+#navbar a:hover {
+    background-color: rgb(225, 199, 163);
+}
+
+#navbar li {
+    float: left;
+}
+
+
+/* Main Content */
+
+main {
+    max-width: 1000px;
+    margin: auto;
+    padding: 40px;
+}
+
+main h1 {
+    font-size: 42px;
+    margin-bottom: 30px;
+}
+
+main h2 {
+    margin-top: 45px;
+    margin-bottom: 15px;
+    font-size: 28px;
+}
+
+main p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: #444;
+}
+
+main ul,
+main ol {
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+main li {
+    margin-bottom: 8px;
+}
+
+
+/* Workflow */
+
+main strong {
+    color: #555;
+}
+
+
+/* Model Link */
+
+main a {
+    color: grey;
+}
+
+main a:hover {
+    color: black;
+}
+
+
+/* Try Model Section */
+
+main h2:last-of-type {
+    margin-top: 50px;
+}
+
