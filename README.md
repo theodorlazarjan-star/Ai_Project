@@ -13,6 +13,10 @@ Users enter customer information and the application predicts **Churn** or **No 
 
 Machine Learning, Python, Flask, Customer Churn, Data Science, Data Visualization, HTML, CSS, Classification
 
+## Full Documentation
+
+For a detailed explanation of the project, see the **[full project documentation](Project_Customer_Churn_Predictor.docx)**.
+
 ## Installation Instructions
 
 1. Clone the repository.
