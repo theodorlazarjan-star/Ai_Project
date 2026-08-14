@@ -1,16 +1,27 @@
 from flask import Flask, render_template, request
 import joblib
 import pandas as pd
+import os
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 app = Flask(__name__)
 
 # Load trained model and threshold
 
-model = joblib.load("churn_model.pkl")
-threshold = joblib.load("churn_threshold.pkl")
+#model = joblib.load("churn_model.pkl")
+#threshold = joblib.load("churn_threshold.pkl")
 
-print("Model loaded successfully!")
-print("Threshold:", threshold)
+MODEL_FOLDER = "models"
+
+#print("Model loaded successfully!")
+#print("Threshold:", threshold)
+
+DATASET_PATH = "Telco-Customer-Churn.csv"
+
+df = pd.read_csv(DATASET_PATH)
+
+os.makedirs("static/plots", exist_ok=True)
 
 # Home
 
@@ -29,6 +40,27 @@ def model_page():
 @app.route("/predict", methods=["POST"])
 def predict():
 
+    print("PREDICT ROUTE STARTED")
+
+    # Get selected model
+    model_name = request.form["model"]
+
+    print("Selected model:", model_name)
+
+    # Load selected model
+    model = joblib.load(
+        os.path.join(MODEL_FOLDER, f"{model_name}_model.pkl")
+    )
+
+    print("MODEL LOADED")
+
+    # Load corresponding threshold
+    threshold = joblib.load(
+        os.path.join(MODEL_FOLDER, f"{model_name}_threshold.pkl")
+    )
+
+    print("THRESHOLD LOADED:", threshold)
+
     # Get values from HTML form
 
     tenure = float(request.form["tenure"])
@@ -41,6 +73,44 @@ def predict():
     contract = request.form["contract"]
     payment = request.form["payment"]
     monthly = float(request.form["monthly"])
+
+    print("FORM DATA LOADED")
+
+
+    # Create customer plot
+
+    plt.figure(figsize=(8, 6))
+
+    sns.scatterplot(
+        data=df,
+        x="tenure",
+        y="MonthlyCharges",
+        hue="Churn"
+    )
+
+    plt.scatter(
+        tenure,
+        monthly,
+        color="red",
+        s=180,
+        marker="X",
+        label="Current Customer"
+    )
+
+    plt.title("Tenure vs Monthly Charges")
+    plt.xlabel("Tenure (months)")
+    plt.ylabel("Monthly Charges")
+
+    plt.legend()
+
+    plt.tight_layout()
+
+    plt.savefig(
+        "static/plots/customer_tenure_monthly.png"
+    )
+
+    plt.close()
+
 
     # Create DataFrame
 
@@ -56,6 +126,8 @@ def predict():
         "Contract": contract,
         "PaymentMethod": payment
     }])
+
+    print("DATAFRAME CREATED")
 
     # Convert Yes / No features
 
@@ -81,6 +153,8 @@ def predict():
         "No phone service": False
     })
 
+    print("BOOLEAN FEATURES CONVERTED")
+
     # One-hot encoding
 
     data = pd.get_dummies(
@@ -92,6 +166,8 @@ def predict():
         ]
     )
 
+    print("ONE-HOT ENCODING DONE")
+
     # Make sure all expected features exist
 
     expected_features = model.feature_names_in_
@@ -101,9 +177,13 @@ def predict():
         if feature not in data.columns:
             data[feature] = False
 
+    print("EXPECTED FEATURES ADDED")
+
     # Keep exact model features and order
 
     data = data[expected_features]
+
+    print("FEATURE ORDER SET")
 
     # Convert boolean values to integers
 
@@ -113,9 +193,13 @@ def predict():
 
     data[boolean_columns] = data[boolean_columns].astype(int)
 
+    print("BOOLEAN VALUES CONVERTED")
+
     # Prediction probability
 
     probability = model.predict_proba(data)[0][1]
+
+    print("PROBABILITY:", probability)
 
     # Apply threshold
 
@@ -125,6 +209,8 @@ def predict():
         result = "Churn"
     else:
         result = "No Churn"
+
+    print("RESULT:", result)
 
     # Return to SAME model page
 
@@ -138,4 +224,4 @@ def predict():
 # Start Flask
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)

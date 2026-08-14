@@ -114,6 +114,20 @@
                 min="0" step="0.01" required>
             <br><br>
 
+            <h2>Select Model</h2>
+
+            <label for="model">Model:</label>
+            <select id="model" name="model" required>
+                <option value="logistic_regression">Logistic Regression</option>
+                <option value="knn">kNN</option>
+                <option value="naive_bayes">Naive Bayes</option>
+                <option value="svm">SVM</option>
+                <option value="decision_tree">Decision Tree</option>
+                <option value="random_forest">Random Forest</option>
+            </select>
+
+            <br><br>
+
             <input type="submit" value="Predict Churn">
             <input type="reset" value="Reset">
 
@@ -145,6 +159,21 @@
             <div id="prediction">
                 <strong>Prediction: --</strong>
             </div>
+
+        {% endif %}
+
+        {% if prediction %}
+
+        <h2>Customer Position</h2>
+
+        <div id="customer-plot">
+
+            <img
+                src="{{ url_for('static', filename='plots/customer_tenure_monthly.png') }}"
+                alt="Tenure vs Monthly Charges"
+            >
+
+        </div>
 
         {% endif %}
 

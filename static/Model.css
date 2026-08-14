@@ -100,3 +100,16 @@ main h2:last-of-type {
     margin-top: 50px;
 }
 
+
+#customer-plot {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#customer-plot img {
+    width: 700px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
